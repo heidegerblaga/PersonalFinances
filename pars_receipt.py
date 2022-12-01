@@ -17,7 +17,7 @@ def pars(images):
                         )
 
 
-    with open("response.json", "w") as f:
+    with open("H:\Mój dysk/recipes/response.json", "w") as f:
             json.dump(json.loads(res.text),f)
 
 

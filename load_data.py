@@ -1,14 +1,25 @@
 import json
 from datetime import datetime
 from models import (Base, session,
-                    Shopping, Products, engine)
+                    Shopping, Products,Merchant, engine)
 import re
-
+import pandas as pd
+from analysis import merchant
 
 def clean_shoping(text):
+
+    collist = list(merchant["merchant_name"])
     text = text.split("\n")
+    merchant_name = ""
+    if any((match := item) in collist for item in text):
+        merchant_name= match
+
+    else:
+        merchant_name = text[0].strip()
+
+
     total = 0
-    merchant_name = text[0].strip()
+
     #tu dodaj funkcje znajdującą sklep w bazie danych
 
     for i in range(0, len(text) - 1):
@@ -36,8 +47,8 @@ def clean_products(text):
 
 
     for i in range(0, len(staff)):
-        match = re.sub(r'[ ]+[A-H]?[ ]+', ' X ', staff[i].strip())
-        match = re.split(r' X ', match)
+        match = re.sub(r'[ ]+[A-Z]?[ ]+', ' @ ', staff[i].strip())
+        match = re.split(r' @ ', match)
 
         print(match)
         if (len(match) == 2) and bool(re.search("[\d ]+[x*X][\d, ]+[\w]", match[1])):

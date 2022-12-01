@@ -35,6 +35,13 @@ class Products(Base):
     shopping_id = Column(Integer,ForeignKey("shopping.id"))
     shopping = relationship("Shopping",back_populates="products")
 
+class Merchant(Base):
+    __tablename__ = 'merchant'
+
+    id = Column(Integer, primary_key=True)
+    merchant_name = Column('merchant_name',String)
+    
+
 
 
 
