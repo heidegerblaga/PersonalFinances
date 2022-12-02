@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from models import (Base, session,
                     Shopping, Products, engine)
 from datetime import datetime
+from collections import Counter
 
 
 
@@ -20,6 +21,9 @@ def periodic_balance(a,b):
     return table.loc[mask]
 
 
+def typical_shopping_cart():
+    print(table['item'].value_counts())
+    print(table.item.mode())
 
 
 
@@ -44,7 +48,7 @@ def navigator():
 
         periodic_balance(a,b)
     elif choice==2:
-        pass
+        typical_shopping_cart()
     elif choice==3:
         pass
     elif choice==4:
