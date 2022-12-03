@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from models import (Base, session,
                     Shopping, Products, engine)
-from datetime import datetime
+from datetime import datetime, timedelta
 from collections import Counter
-
-
+from functools import reduce
+from statistics import mean
 
 products = pd.read_sql_table('products', 'sqlite:///budget.db')
 shopping = pd.read_sql_table('shopping', 'sqlite:///budget.db')
@@ -24,6 +24,31 @@ def periodic_balance(a,b):
 def typical_shopping_cart():
     print(table['item'].value_counts())
     print(table.item.mode())
+    return table.item.mode()
+
+
+def macro():
+
+        x= shopping.sort_values(by="date")
+        x.reset_index(inplace=True)
+        del x['index']
+        x["date"] = pd.to_datetime(x["date"])
+
+        dates = [date.date() for date in pd.to_datetime(x["date"])]
+        x = []
+        for i in range(0,len(dates)-1):
+            x.append((dates[i+1] - dates[i]).days)
+
+        frequency = round(30/mean(x))
+        print("Your shopping frequency is %d shopping's per month" % (frequency))
+
+
+
+
+
+
+
+
 
 
 
@@ -50,7 +75,7 @@ def navigator():
     elif choice==2:
         typical_shopping_cart()
     elif choice==3:
-        pass
+        macro()
     elif choice==4:
         pass
 
