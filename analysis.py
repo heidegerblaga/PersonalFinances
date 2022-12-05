@@ -29,18 +29,42 @@ def typical_shopping_cart():
 
 def macro():
 
-        x= shopping.sort_values(by="date")
-        x.reset_index(inplace=True)
-        del x['index']
-        x["date"] = pd.to_datetime(x["date"])
+        print('''        1.Shopping frequency
+        2.Data about expense's''')
+        choice = int(input())
 
-        dates = [date.date() for date in pd.to_datetime(x["date"])]
-        x = []
-        for i in range(0,len(dates)-1):
-            x.append((dates[i+1] - dates[i]).days)
+        if choice==1:
+            x = shopping.sort_values(by="date")
+            x.reset_index(inplace=True)
+            del x['index']
+            x["date"] = pd.to_datetime(x["date"])
 
-        frequency = round(30/mean(x))
-        print("Your shopping frequency is %d shopping's per month" % (frequency))
+            dates = [date.date() for date in pd.to_datetime(x["date"])]
+            x = []
+            for i in range(0,len(dates)-1):
+                x.append((dates[i+1] - dates[i]).days)
+
+            frequency = round(30/mean(x))
+            print("Your shopping frequency is %d shopping's per month" % (frequency))
+
+        elif choice==2:
+            print(shopping['total'].describe())
+
+        elif choice==3:
+            pass
+
+
+
+def shoppinglist():
+    # "zakładana" suma wydatków na miesiąc (
+    # tworzenie listy zakupów
+    # sugestie z najczęściej kupowanych zakupów
+    # ocenia na ile ta lista zakupow jest kompatybilna z zakładaną sumą wydatków
+
+
+    pass
+
+
 
 
 
@@ -56,8 +80,8 @@ def navigator():
     print('''                   ANALIZA WYDATKÓW
              1. Rozliczenie okresowe
              2. Typowy koszyk [najczęściej kupowane produkty]
-             3. Analiza makro [częstotliwość zakupów, średnie wydatki na jedne zakupy, najdroższe produkty, współczynnik "świadomych zakupów"]
-             4. Świadome zakupy [miesięczna lista zakupów + sugestie z typowego koszyka]\n''')
+             3. Analiza makro [częstotliwość zakupów, średnie wydatki na jedne zakupy, najdroższe produkty, współczynnik "planowanych zakupów"]
+             4. Planowane zakupy [miesięczna lista zakupów + sugestie z typowego koszyka]\n''')
 
     choice = int(input())
 
