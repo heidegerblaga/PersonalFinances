@@ -1,5 +1,7 @@
 <Menu>:
     BoxLayout:
+        orientation: "vertical"
+
         Button:
             text: 'START'
             on_press: root.main()
@@ -8,7 +10,7 @@
             text: 'Goto Scan'
             on_press: root.manager.current = "scan"
         Button:
-            text: 'Goto Analys'
+            text: "Goto analys"
             on_press: root.manager.current = "analys"
         Button:
             text: 'Quit'
@@ -31,8 +33,18 @@
         on_press: root.capture()
 
 <Analys>:
+
     name:"analys"
     BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: " ANALIZA WYDATKÓW"
         Button:
-            text: 'Goto Scan'
-            on_press: root.manager.current = "scan"
+            text:"Rozliczenie okresowe"
+        Button:
+            text:"Typowy koszyk "
+        Button:
+            text:"Analiza makro"
+
+        Button:
+            text:"Planowane zakupy"

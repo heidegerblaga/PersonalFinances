@@ -106,4 +106,3 @@ def navigator():
 
 
 
-navigator()

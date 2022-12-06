@@ -4,7 +4,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.boxlayout import BoxLayout
 import requests
 from main import main
-
+import analysis as al
+from kivy.uix.label import Label
 import time
 
 
@@ -36,6 +37,16 @@ class Scan(Screen):
             print("Captured")
 
 class Analys(Screen):
+    def navigator(self):
+     self.navigator = al.navigator()
+
+    layout = BoxLayout(orientation='vertical')
+    ll = Label(text='''Kivy is an open source software library 
+                                  \nfor the rapid development of applications 
+                                  \nequipped with novel user interfaces, 
+                                  \nsuch as multi-touch apps.''')
+    layout.add_widget(ll)
+
     pass
 
 
