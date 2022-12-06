@@ -5,8 +5,9 @@ from models import (Base, session,
                     Shopping, Products, engine)
 
 
-if __name__=="__main__":
+#if __name__=="__main__":
 
+def main():
   for path in newimages():
     print(path)
     if "jpg" in path:

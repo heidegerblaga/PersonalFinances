@@ -4,18 +4,18 @@ from models import (Base, session,
                     Shopping, Products,Merchant, engine)
 import re
 import pandas as pd
-from analysis import merchant
+#from analysis import merchant
 
 def clean_shoping(text):
 
-    collist = list(merchant["merchant_name"])
+    #collist = list(merchant["merchant_name"])
     text = text.split("\n")
     merchant_name = ""
-    if any((match := item) in collist for item in text):
-        merchant_name= match
+    #if any((match := item) in collist for item in text):
+    #    merchant_name= match
 
-    else:
-        merchant_name = text[0].strip()
+    #else:
+    merchant_name = text[0].strip()
 
 
     total = 0
