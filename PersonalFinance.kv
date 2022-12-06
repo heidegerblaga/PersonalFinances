@@ -1,0 +1,38 @@
+<Menu>:
+    BoxLayout:
+        Button:
+            text: 'START'
+            on_press: root.main()
+
+        Button:
+            text: 'Goto Scan'
+            on_press: root.manager.current = "scan"
+        Button:
+            text: 'Goto Analys'
+            on_press: root.manager.current = "analys"
+        Button:
+            text: 'Quit'
+
+<Scan>:
+    name:"scan"
+    Camera:
+        id: camera
+        resolution: (640, 480)
+        play: True
+    ToggleButton:
+        text: 'Play'
+        on_press: camera.play = not camera.play
+        size_hint_y: None
+        height: '48dp'
+    Button:
+        text: 'Capture'
+        size_hint_y: None
+        height: '48dp'
+        on_press: root.capture()
+
+<Analys>:
+    name:"analys"
+    BoxLayout:
+        Button:
+            text: 'Goto Scan'
+            on_press: root.manager.current = "scan"
