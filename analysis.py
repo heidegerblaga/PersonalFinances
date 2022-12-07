@@ -76,14 +76,14 @@ def shoppinglist():
 
 
 
-def navigator():
+def navigator(choice):
     print('''                   ANALIZA WYDATKÓW
              1. Rozliczenie okresowe
              2. Typowy koszyk [najczęściej kupowane produkty]
              3. Analiza makro [częstotliwość zakupów, średnie wydatki na jedne zakupy, najdroższe produkty, współczynnik "planowanych zakupów"]
              4. Planowane zakupy [miesięczna lista zakupów + sugestie z typowego koszyka]\n''')
 
-    choice = int(input())
+
 
     if choice==1:
 

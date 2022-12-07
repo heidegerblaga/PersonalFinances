@@ -33,19 +33,14 @@ class Scan(Screen):
             '''
             camera = self.ids['camera']
             timestr = time.strftime("%Y%m%d_%H%M%S")
-            camera.export_to_png("IMG_{}.png".format(timestr))
+            camera.export_to_png("C:/Users/skyri/PycharmProjects/PersonalFinances/folder/IMG_{}.png".format(timestr))
             print("Captured")
 
 class Analys(Screen):
-    def navigator(self):
-     self.navigator = al.navigator()
+    def navigator(self,args):
+     self.navigator = al.navigator(args)
 
-    layout = BoxLayout(orientation='vertical')
-    ll = Label(text='''Kivy is an open source software library 
-                                  \nfor the rapid development of applications 
-                                  \nequipped with novel user interfaces, 
-                                  \nsuch as multi-touch apps.''')
-    layout.add_widget(ll)
+
 
     pass
 

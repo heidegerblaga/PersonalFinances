@@ -7,10 +7,10 @@ from models import (Base, session,
 
 def newimages():
 
-    os.chdir('H:\Mój dysk/recipes')
+    os.chdir('C:/Users/skyri/PycharmProjects/PersonalFinances/folder')
 
     path = []
-    for dirpath, dirnames, filenames in os.walk('H:\Mój dysk/recipes'): #os.walk przeglada wszystkie pliki w sciezce
+    for dirpath, dirnames, filenames in os.walk('C:/Users/skyri/PycharmProjects/PersonalFinances/folder'): #os.walk przeglada wszystkie pliki w sciezce
         for file in filenames:
 
             try:
