@@ -95,7 +95,7 @@ def add_to_db(shopping_info,date,products,file):
 
     session.add(add_shopping)
     session.commit()
-
+    proud = True
     for product in products:
 
         print(products[product])
