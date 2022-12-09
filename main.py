@@ -10,7 +10,7 @@ from models import (Base, session,
 def main():
   for path in newimages():
     print(path)
-    if "png" in path:
+    if "jpg" in path:
 
       if session.query(Shopping).filter(Shopping.filename==path).first() == None:
 

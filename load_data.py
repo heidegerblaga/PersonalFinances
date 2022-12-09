@@ -3,7 +3,8 @@ from datetime import datetime
 from models import (Base, session,
                     Shopping, Products,Merchant, engine)
 import re
-import pandas as pd
+from firebase import db
+
 #from analysis import merchant
 
 def clean_shoping(text):
@@ -82,6 +83,15 @@ def add_to_db(shopping_info,date,products,file):
                             total=float(shopping_info[0]),
                             date=datetime.strptime(date[0] ,"%Y-%m-%d"),
                             filename=file)
+
+    obj = {
+        "merchant_name": shopping_info[1],
+        "total": shopping_info[0],
+        "date": datetime.strptime(date[0] ,"%Y-%m-%d"),
+    }
+
+    doc_ref = db.collection(u'Shopping').document(shopping_info[1])
+    doc_ref.set(obj)
 
     session.add(add_shopping)
     session.commit()
