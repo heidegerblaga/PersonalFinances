@@ -90,7 +90,7 @@ def add_to_db(shopping_info,date,products,file):
         "date": datetime.strptime(date[0] ,"%Y-%m-%d"),
     }
 
-    doc_ref = db.collection(u'Shopping').document(shopping_info[1])
+    doc_ref = db.collection(u'Shopping').document(date[0])
     doc_ref.set(obj)
 
     session.add(add_shopping)
@@ -107,4 +107,14 @@ def add_to_db(shopping_info,date,products,file):
 
         session.add(add_product)
         session.commit()
+        obj = {
+            "product": product,
+            "price": float(products[product][1]),
+            "quantity": float(products[product][0]),
+            "total": float(products[product][2]),
+        }
+
+        doc_ref = db.collection(u'Shopping').document(date[0]).collection(u'Products').document(product)
+        doc_ref.set(obj)
+
 
