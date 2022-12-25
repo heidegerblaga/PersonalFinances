@@ -3,7 +3,7 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 
-cred_obj = firebase_admin.credentials.Certificate("personal-finanse-firebase-adminsdk-qzfyc-c71c1ec5c9.json")
+cred_obj = credentials.Certificate("personal-finanse-firebase-adminsdk-qzfyc-c71c1ec5c9.json")
 default_app = firebase_admin.initialize_app(cred_obj)
 
 
