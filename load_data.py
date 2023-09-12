@@ -3,7 +3,6 @@ from datetime import datetime
 from models import (Base, session,
                     Shopping, Products,Merchant, engine)
 import re
-from firebase import db
 
 #from analysis import merchant
 
@@ -51,7 +50,7 @@ def clean_products(text):
         match = re.sub(r'[ ]+[A-Z]?[ ]+', ' @ ', staff[i].strip())
         match = re.split(r' @ ', match)
 
-        print(match)
+
         if (len(match) == 2) and bool(re.search("[\d ]+[x*X][\d, ]+[\w]", match[1])):
             match[1] = re.sub(r'(szt.)?', '', match[1])
             listofproducts[match[0]] = re.findall(r'[\d+,(.)?]+[A-C]?', match[1].strip())
@@ -64,9 +63,11 @@ def clean_products(text):
 
 
 def load(file):
-    path = "H:\Mój dysk/recipes/response.json"
-    with open(path, "r") as f:
+    path = "../json/response.json"
+    with open(path, "r+") as f:
         data = json.load(f)
+
+    print(data)
 
     text = data["receipts"][0]["ocr_text"]
     print(text)
@@ -84,37 +85,21 @@ def add_to_db(shopping_info,date,products,file):
                             date=datetime.strptime(date[0] ,"%Y-%m-%d"),
                             filename=file)
 
-    obj = {
-        "merchant_name": shopping_info[1],
-        "total": shopping_info[0],
-        "date": datetime.strptime(date[0] ,"%Y-%m-%d"),
-    }
-
-    doc_ref = db.collection(u'Shopping').document(date[0])
-    doc_ref.set(obj)
-
     session.add(add_shopping)
     session.commit()
-    proud = True
+
     for product in products:
 
         print(products[product])
         add_product = Products(item=product,
                                 price=float(products[product][1]),
                                 quantity=float(products[product][0]),
-                                total =float(products[product][2]),
                                 shopping_id=session.query(Shopping).order_by(Shopping.id.desc()).first().id)
 
         session.add(add_product)
         session.commit()
-        obj = {
-            "product": product,
-            "price": float(products[product][1]),
-            "quantity": float(products[product][0]),
-            "total": float(products[product][2]),
-        }
 
-        doc_ref = db.collection(u'Shopping').document(date[0]).collection(u'Products').document(product)
-        doc_ref.set(obj)
+
+
 
 

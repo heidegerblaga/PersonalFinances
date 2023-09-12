@@ -2,12 +2,14 @@ from sqlalchemy import (create_engine,Column,
                         Integer,String,Date,Float,ForeignKey)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import (sessionmaker,relationship)
+from psql import engine
 
-engine = create_engine('sqlite:///budget.db',echo=False)
+
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
+dbConnection = engine.connect()
 
 class Shopping(Base):
     __tablename__ = 'shopping'
@@ -31,7 +33,6 @@ class Products(Base):
     item = Column('item',String)
     price = Column('price',Float)
     quantity = Column('quantity', Float)
-    total = Column('total', Float)
     shopping_id = Column(Integer,ForeignKey("shopping.id"))
     shopping = relationship("Shopping",back_populates="products")
 

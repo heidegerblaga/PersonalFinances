@@ -54,7 +54,6 @@ def macro():
             pass
 
 
-
 def shoppinglist():
     # "zakładana" suma wydatków na miesiąc (
     # tworzenie listy zakupów
