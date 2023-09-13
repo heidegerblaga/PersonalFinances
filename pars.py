@@ -6,7 +6,7 @@ from mapper import mapp
 
 def readable(path):
 
-    image = cv2.imread('folder/IMG_20221116_213813.jpg')
+    image = cv2.imread(path)
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
@@ -34,18 +34,20 @@ def crop(path):
 
     blurred = cv2.GaussianBlur(gray,(5,5),0)
 
-
     edged = cv2.Canny(blurred,30,50)
 
 
     contours, heiarchy = cv2.findContours(edged, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+
     contours = sorted(contours, key= cv2.contourArea, reverse=True)
+
+
 
     for c in contours:
 
         p = cv2.arcLength(c,True)
-        approx = cv2.approxPolyDP(c,0.0001*p,True)
+        approx = cv2.approxPolyDP(c,0.02*p,True)
 
         if len(approx)==4:
             target = approx
@@ -63,6 +65,9 @@ def crop(path):
     cv2.waitKey(0)
 
 
+    return 'folder/enhanced_image.jpg'
+
+
 
 
 
@@ -74,6 +79,10 @@ def crop(path):
 
 if __name__=='__main__':
 
-    crop('folder/IMG_20221112_083632.jpg')
+    readable('folder/20230114_172145.jpg')
+
+    custom_config = r'--oem 1 --psm 6 -l pol+num'
+
+    print(pytesseract.image_to_string('folder/enhanced_image.jpg',lang='Pol', config=custom_config))
 
 
