@@ -15,11 +15,11 @@ def main():
       if session.query(Shopping).filter(Shopping.filename==path).first() == None:
 
         pars(path)
-        try:
-          add = load(path)
-        except :
-          print("\n\n\nProbably you daily quota has exceed, try later.")
-          break
+        #try:
+        add = load(path)
+        #except :
+         # print("\n\n\nProbably you daily quota has exceed, try later.")
+          #break
 
 
         print('''Do you want add this to data base ?\n

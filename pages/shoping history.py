@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
-import  psycopg2
-
+import psycopg2
 
 
 conn = psycopg2.connect(user="postgres",
@@ -10,14 +9,16 @@ conn = psycopg2.connect(user="postgres",
               database="Finances")
 
 
-query = "select * from shopping;"
+query = "select * from outgoings;"
 
 df = pd.read_sql(query,conn)
 
 df = df.drop(columns=['filename'])
 
-
 st.dataframe(df)
+
+
+
 
 
 

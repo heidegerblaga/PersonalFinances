@@ -12,7 +12,7 @@ Base = declarative_base()
 dbConnection = engine.connect()
 
 class Shopping(Base):
-    __tablename__ = 'shopping'
+    __tablename__ = 'outgoings'
 
     id = Column(Integer, primary_key=True)
     merchant_name = Column('merchant_name', String)
@@ -27,7 +27,7 @@ class Shopping(Base):
 
 
 class Products(Base):
-    __tablename__ = 'products'
+    __tablename__ = 'shopping'
 
     id = Column(Integer, primary_key=True)
     item = Column('item',String)
