@@ -7,5 +7,4 @@ from start import main
 
 if __name__ == "__main__":
 
-    main()
     load('json/response.json')

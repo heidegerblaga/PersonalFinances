@@ -3,6 +3,14 @@ from datetime import datetime
 from models import (Base, session,
                     Shopping, Products,Merchant, engine)
 import re
+import psycopg2
+
+# Połącz z bazą danych PostgreSQL
+conn = psycopg2.connect(user="postgres",
+                        password="qwest1",
+                        host="localhost",
+                        database="Finances")
+cur = conn.cursor()
 
 #from analysis import merchant
 
@@ -34,11 +42,28 @@ def clean_products(text):
     staff = []
     listofproducts = {}
     text = text.split("\n")
+    location = []
 
     for i in range(0, len(text)-1):
-        text[i] = text[i].strip()
 
-        if text[i] == "PARAGON FISKALNY":
+
+
+        if " NIP " not in text[i]:
+            print(text[i])
+            location.append(text[i].strip())
+        else:
+            cur.execute("INSERT INTO locations (location) VALUES (%s) ON CONFLICT (location) DO NOTHING;",
+                        (' '.join(location),))
+
+            conn.commit()
+
+            cur.close()
+            conn.close()
+
+
+        if text[i].strip() == "PARAGON FISKALNY":
+
+
             j = i + 1
             while "SPRZEDAZ OPODATKOWANA" not in text[j]:
                 staff.append(text[j])
@@ -63,7 +88,7 @@ def clean_products(text):
 
 
 def load(file):
-    path = "../json/response.json"
+    path = "json/response.json"
     with open(path, "r+") as f:
         data = json.load(f)
 

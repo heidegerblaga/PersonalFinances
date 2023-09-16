@@ -12,6 +12,7 @@ def main():
     print(path)
     if "jpg" in path:
 
+     try:
       if session.query(Shopping).filter(Shopping.filename==path).first() == None:
 
         pars(path)
@@ -21,16 +22,20 @@ def main():
          # print("\n\n\nProbably you daily quota has exceed, try later.")
           #break
 
+     except:
 
-        print('''Do you want add this to data base ?\n
+         pass
+
+    print('''Do you want add this to data base ?\n
         1) yes \n
         0) no \n
         ''')
-        choice = input()
+    choice = input()
 
-        if int(choice)==1:
-            add_to_db(add[0],add[1],add[2],add[3])
+    if int(choice)==1:
+        pass
+            #add_to_db(add[0],add[1],add[2],add[3])
 
-        else:
+    else:
             continue
 

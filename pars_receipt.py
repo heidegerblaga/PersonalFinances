@@ -17,7 +17,7 @@ def pars(images):
                         )
 
 
-    with open("../json/response.json", "w+") as f:
+    with open("json/response.json", "w+") as f:
             json.dump(json.loads(res.text),f)
 
 

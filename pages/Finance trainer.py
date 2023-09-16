@@ -2,6 +2,8 @@ import pandas as pd
 import streamlit as st
 import psycopg2
 import itertools
+from collections import defaultdict
+import matplotlib.pyplot as plt
 
 
 conn = psycopg2.connect(user="postgres",
@@ -19,23 +21,38 @@ lt = list(df['total'])
 
 y = list(itertools.accumulate(lt))
 
-# for v in range(0,len(lt)) :
-#     print(v)
-#     if v == 0 :
-#         y.append(lt[0])
-#     else:
-#      y.append(y[v-1]+lt[v])
+
+suma_dict = defaultdict(int)
+
+for index, row in df.iterrows():
+    data = row['date']
+    wartosc = row['total']
+    suma_dict[data] += wartosc
+
+suma_dict = dict(suma_dict)
+
+print(suma_dict)
+
 
 print(y)
 
 df['sum'] = y
 
 print(df)
+
 df['date'] = pd.to_datetime(df['date'])
 
 df = df.sort_values(by='id', ascending= True)
 
-st.bar_chart(df.set_index('date')['total'])
+daty = list(suma_dict.keys())
+sumy = list(suma_dict.values())
+
+df1 = pd.DataFrame({'date': daty, 'sum': sumy})
+
+daty = list(map(lambda data: data.strftime("%Y-%m-%d"), daty))
+
+
+st.bar_chart(df1.set_index('date'))
 
 st.line_chart(df.set_index('id')['sum'])
 
