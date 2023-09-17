@@ -7,4 +7,5 @@ from start import main
 
 if __name__ == "__main__":
 
+    pars('folder/20230114_172246.jpg')
     load('json/response.json')

@@ -5,7 +5,6 @@ from models import (Base, session,
 import re
 import psycopg2
 
-# Połącz z bazą danych PostgreSQL
 conn = psycopg2.connect(user="postgres",
                         password="qwest1",
                         host="localhost",
@@ -16,15 +15,9 @@ cur = conn.cursor()
 
 def clean_shoping(text):
 
-    #collist = list(merchant["merchant_name"])
     text = text.split("\n")
-    merchant_name = ""
-    #if any((match := item) in collist for item in text):
-    #    merchant_name= match
 
-    #else:
     merchant_name = text[0].strip()
-
 
     total = 0
 
@@ -47,18 +40,21 @@ def clean_products(text):
     for i in range(0, len(text)-1):
 
 
-
         if " NIP " not in text[i]:
-            print(text[i])
+
             location.append(text[i].strip())
         else:
-            cur.execute("INSERT INTO locations (location) VALUES (%s) ON CONFLICT (location) DO NOTHING;",
-                        (' '.join(location),))
+           try:
+            cur.execute("INSERT INTO locations (location) VALUES (%s);",(' '.join(location),))
 
             conn.commit()
 
             cur.close()
             conn.close()
+
+           except:
+               print('\n Wartość już istnieje w tabeli \n')
+               pass
 
 
         if text[i].strip() == "PARAGON FISKALNY":
@@ -83,7 +79,7 @@ def clean_products(text):
             listofproducts[match[0]][0] = re.sub(r',', '.', listofproducts[match[0]][0])
             listofproducts[match[0]][1] = re.sub(r',', '.', listofproducts[match[0]][1])
             listofproducts[match[0]][2] = re.sub(r',', '.', listofproducts[match[0]][2])
-    print(listofproducts)
+
     return listofproducts
 
 
@@ -92,10 +88,10 @@ def load(file):
     with open(path, "r+") as f:
         data = json.load(f)
 
-    print(data)
+
 
     text = data["receipts"][0]["ocr_text"]
-    print(text)
+
     date = re.findall(r'(20\d\d-\d\d-\d\d)', text)
     products = clean_products(text)
     shopping_info = clean_shoping(text)
