@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from models import (Base, session,
                     Shopping, Products,Merchant, engine)
+from sqlalchemy import MetaData,Table,insert,select
 import re
 import psycopg2
 
@@ -101,24 +102,41 @@ def load(file):
 
 def add_to_db(shopping_info,date,products,file):
 
-    add_shopping = Shopping(merchant_name=shopping_info[1],
-                            total=float(shopping_info[0]),
-                            date=datetime.strptime(date[0] ,"%Y-%m-%d"),
-                            filename=file)
+    metadata = MetaData()
+    #outgoings = Table('outgoings', metadata,  autoload_with=engine)
 
-    session.add(add_shopping)
-    session.commit()
+    # ins = insert(outgoings).values(
+    #     merchant_name=shopping_info[1],
+    #     total=float(shopping_info[0]),
+    #     date=date[0],
+    #     filename=file
+    # )
+    #
+    connection = engine.connect()
+    # connection.execute(ins)
 
+    shopping = Table('shopping', metadata, autoload_with=engine)
+    stmt = select([shopping.id]).order_by(shopping.c.id.desc()).limit(1)
+    result = connection.execute(stmt)
+    last_row = result.fetchone()
+    print(last_row)
+
+    exit()
     for product in products:
 
         print(products[product])
-        add_product = Products(item=product,
-                                price=float(products[product][1]),
-                                quantity=float(products[product][0]),
-                                shopping_id=session.query(Shopping).order_by(Shopping.id.desc()).first().id)
+        ins = insert(outgoings).values(
+            item=product,
+            price=float(products[product][1]),
+            quantity=float(products[product][0]),
+            shopping_id=session.query(Shopping).order_by(Shopping.id.desc()).first().id)
+
+
 
         session.add(add_product)
         session.commit()
+
+        connection.close()
 
 
 

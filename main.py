@@ -7,5 +7,6 @@ from start import main
 
 if __name__ == "__main__":
 
-    pars('folder/20230114_172246.jpg')
-    load('json/response.json')
+    #pars('folder/20230114_172246.jpg')
+    ld = load('json/response.json')
+    add_to_db(ld[0],ld[1],ld[2],ld[3])
