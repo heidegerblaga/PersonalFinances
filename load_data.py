@@ -103,17 +103,17 @@ def load(file):
 def add_to_db(shopping_info,date,products,file):
 
     metadata = MetaData()
-    #outgoings = Table('outgoings', metadata,  autoload_with=engine)
+    outgoings = Table('outgoings', metadata,  autoload_with=engine)
 
-    # ins = insert(outgoings).values(
-    #     merchant_name=shopping_info[1],
-    #     total=float(shopping_info[0]),
-    #     date=date[0],
-    #     filename=file
-    # )
-    #
+    ins = insert(outgoings).values(
+        merchant_name=shopping_info[1],
+        total=float(shopping_info[0]),
+        date=date[0],
+        filename=file
+    )
+
     connection = engine.connect()
-    # connection.execute(ins)
+    connection.execute(ins)
 
     shopping = Table('shopping', metadata, autoload_with=engine)
     stmt = select([shopping.id]).order_by(shopping.c.id.desc()).limit(1)

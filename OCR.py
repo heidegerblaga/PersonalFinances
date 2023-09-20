@@ -10,10 +10,10 @@ def readable(path):
 
     image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
-    image = cv2.resize(image,(800,1000))
+    image = cv2.resize(image,(800,1300))
 
 
-    adaptive = cv2.adaptiveThreshold(image,200,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+    adaptive = cv2.adaptiveThreshold(image,125,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
                                      cv2.THRESH_BINARY,41,5)
 
     cv2.imshow('adapt',adaptive)
@@ -26,7 +26,7 @@ def crop(path):
 
     image = cv2.imread(path)
 
-    image = cv2.resize(image,(1300,800))
+    image = cv2.resize(image,(1000,1300))
 
     orig = image.copy()
 
@@ -79,10 +79,12 @@ def crop(path):
 
 if __name__=='__main__':
 
-    readable('folder/20230114_172145.jpg')
+    crop('folder/IMG_20230919_161219.jpg')
+    readable('folder/enhanced_image.jpg')
+
 
     custom_config = r'--oem 1 --psm 6 -l pol+num'
 
-    print(pytesseract.image_to_string('folder/enhanced_image.jpg',lang='Pol', config=custom_config))
+    print(pytesseract.image_to_string('folder/enhanced_image.jpg',lang='Pol',config=custom_config))
 
 

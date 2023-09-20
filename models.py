@@ -11,6 +11,8 @@ Base = declarative_base()
 
 dbConnection = engine.connect()
 
+print('hehe')
+
 class Shopping(Base):
     __tablename__ = 'outgoings'
 
